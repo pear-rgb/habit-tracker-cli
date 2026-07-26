@@ -3,6 +3,7 @@
 
 import json
 import os
+import calendar
 from datetime import datetime, timedelta
 from tkinter import *
 from tkinter import messagebox
@@ -171,25 +172,29 @@ class HabitTrackerApp:
                          activebackground="#e57373", command=self.delete_habit)
         btn_del.pack(anchor=W)
         
-        # календарь
-        Label(self.right, text="Последние 30 дней:", bg=BG, fg=TEXT,
+        # календарь (исправленная логика на текущий месяц)
+        Label(self.right, text="Текущий месяц:", bg=BG, fg=TEXT,
               font=("Segoe UI", 12, "bold")).pack(anchor=W, pady=(25, 10))
         
         cal_frame = Frame(self.right, bg=BG)
         cal_frame.pack(anchor=W)
         
-        # собираем 30 дней в список
+        # собираем точное количество дней в текущем месяце
         today_dt = datetime.now().date()
-        days = []
-        for i in range(29, -1, -1):
-            d = today_dt - timedelta(days=i)
-            days.append((d.strftime("%Y-%m-%d"), d.strftime("%d")))
+        year = today_dt.year
+        month = today_dt.month
+        num_days = calendar.monthrange(year, month)[1]
         
-        # рисуем по 7 дней в строке — теперь без багов
-        for row_start in range(0, 30, 7):
+        days = []
+        for d in range(1, num_days + 1):
+            date_str = f"{year}-{month:02d}-{d:02d}"
+            days.append((date_str, str(d)))
+        
+        # рисуем по 7 дней в строке без искажения количества дней
+        for row_start in range(0, num_days, 7):
             row = Frame(cal_frame, bg=BG)
             row.pack(anchor=W, pady=3)
-            for j in range(row_start, min(row_start + 7, 30)):
+            for j in range(row_start, min(row_start + 7, num_days)):
                 date_str, day_num = days[j]
                 if date_str in checks:
                     lbl = Label(row, text=day_num, width=3, bg=GREEN, fg=BG,
