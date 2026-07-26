@@ -1,0 +1,31 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# ===== Виртуальное окружение =====
+venv/
+env/
+ENV/
+.venv/
+
+# ===== IDE / Редакторы =====
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ===== PyInstaller (сборка .exe) =====
+dist/
+build/
+*.spec
+
+# ===== ЛИЧНЫЕ ДАННЫЕ — НЕ ЗАЛИВАТЬ НА GITHUB! =====
+habits.json
+
+# ===== Системные файлы Windows =====
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
